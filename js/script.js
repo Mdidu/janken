@@ -28,6 +28,7 @@ var iaHit2;
 var win = 0;
 var loose = 0;
 var draw = 0;
+
 var hits = ["Rock", "Paper", "Scissors"];
 
 function modeChoice() {
@@ -37,6 +38,7 @@ function modeChoice() {
         rock.style.display = "none";
         paper.style.display = "none";
         scissors.style.display = "none";
+        res.style.display ="none";
 
         if(round < roundMax){
             autoGame = setInterval(party,1000);
@@ -69,8 +71,8 @@ function party(){
         compar("Scissors", iaHit);
     }else {
         iaHit2 = hitRandom(hits);
-        imgHit(iaHit2, iaHit);
-        compar(iaHit2, iaHit);
+        imgHit(iaHit, iaHit2);
+        compar(iaHit, iaHit2);
     }
 }
 //function used to display the image of the move played by the player
@@ -99,18 +101,42 @@ function compar(playerHit, iaHit) {
         ++win;
         res.innerHTML = "Win !";
         score.innerHTML = "Score : " + win + " win, " + loose + " loose, " + draw + " draw !";
+        historyHits(playerHit, iaHit, "green");
     }else if((playerHit === "Rock" && iaHit === "Paper") || (playerHit === "Paper" && iaHit === "Scissors") ||
         (playerHit === "Scissors" && iaHit === "Rock")){
         ++loose;
         res.innerHTML = "Loose !";
         score.innerHTML = "Score : " + win + " win, " + loose + " loose, " + draw + " draw !";
+        historyHits(playerHit, iaHit, "red");
     }else{
         ++draw;
         res.innerHTML = "Draw !";
         score.innerHTML = "Score : " + win + " win, " + loose + " loose, " + draw + " draw !";
+        historyHits(playerHit, iaHit);
     }
 }
 
+function historyHits(playerHit, iaHit, color) {
+    var history = document.createElement("div");
+
+    var p1 = document.createElement('span');
+    p1.innerHTML = "Player 1: " + playerHit;
+    history.appendChild(p1);
+
+    var p2 = document.createElement('span');
+    p2.innerHTML += " Player 2: " + iaHit;
+    history.appendChild(p2);
+
+    game.appendChild(history);
+
+    if(color === "green"){
+        p1.className = "green";
+        p2.className = "red";
+    }else if(color === "red"){
+        p1.className = "red";
+        p2.className = "green";
+    }
+}
 function reload(){
     score.innerHTML = "";
     player.src = "";
