@@ -1,0 +1,30 @@
+body{
+    text-align: center;
+}
+div, button{
+    font-size: 20px;
+    margin-top: 10px;
+}
+h1{
+    margin-top: 3%;
+}
+.hit{
+    margin: 15px;
+    cursor: pointer;
+}
+#onePlayer, #bot{
+    cursor: pointer;
+}
+#mode{
+    margin-top: 15%;
+}
+#game{
+    display: none;
+    margin-top: 3%;
+}
+#ia{
+    margin-left: 70px;
+}
+#score{
+    margin-top: 5%;
+}
