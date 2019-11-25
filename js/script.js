@@ -14,6 +14,11 @@ var scissors = document.getElementById('scissors');
 
 var reset = document.getElementById('reload');
 
+//variable storing the image path
+var imgRock = "img/Rock-paper-scissors_(rock).png";
+var imgPaper = "img/Rock-paper-scissors_(paper).png";
+var imgScissors = "img/Rock-paper-scissors_(scissors).png";
+
 var round = 0;
 var intervalTempo;
 var roundMax = 100;
@@ -23,7 +28,7 @@ var iaHit2;
 var win = 0;
 var loose = 0;
 var draw = 0;
-var hits = ["Pierre", "Feuille", "Ciseaux"];
+var hits = ["Rock", "Paper", "Scissors"];
 
 function modeChoice() {
     mode.style.display = "none";
@@ -50,56 +55,58 @@ function hitRandom(id) {
     return id[Math.floor(Math.random() * id.length)];
 }
 
+//function that triggers the game
 function party(){
     iaHit = hitRandom(hits);
     if(this === rock){
-        imgHit("Pierre", iaHit);
-        compar("Pierre", iaHit);
+        imgHit("Rock", iaHit);
+        compar("Rock", iaHit);
     }else if(this === paper){
-        imgHit("Feuille", iaHit);
-        compar("Feuille", iaHit);
+        imgHit("Paper", iaHit);
+        compar("Paper", iaHit);
     }else if(this === scissors){
-        imgHit("Ciseaux", iaHit);
-        compar("Ciseaux", iaHit);
+        imgHit("Scissors", iaHit);
+        compar("Scissors", iaHit);
     }else {
         iaHit2 = hitRandom(hits);
         imgHit(iaHit2, iaHit);
         compar(iaHit2, iaHit);
     }
 }
-
+//function used to display the image of the move played by the player
 function imgHit(playerHit, iaHit) {
-    if(playerHit === "Pierre"){
-        player.src = "img/Rock-paper-scissors_(rock).png";
-    }else if(playerHit === "Feuille"){
-        player.src = "img/Rock-paper-scissors_(paper).png";
-    }else if(playerHit === "Ciseaux"){
-        player.src = "img/Rock-paper-scissors_(scissors).png";
+    if(playerHit === "Rock"){
+        player.src = imgRock;
+    }else if(playerHit === "Paper"){
+        player.src = imgPaper;
+    }else if(playerHit === "Scissors"){
+        player.src = imgScissors;
     }
 
-    if(iaHit === "Pierre"){
-        ia.src = "img/Rock-paper-scissors_(rock).png";
-    }else if(iaHit === "Feuille"){
-        ia.src = "img/Rock-paper-scissors_(paper).png";
-    }else if(iaHit === "Ciseaux"){
-        ia.src = "img/Rock-paper-scissors_(scissors).png";
+    if(iaHit === "Rock"){
+        ia.src = imgRock;
+    }else if(iaHit === "Paper"){
+        ia.src = imgPaper;
+    }else if(iaHit === "Scissors"){
+        ia.src = imgScissors;
     }
 }
 
+//function comparing opponents' moves, decides who wins and displays the result
 function compar(playerHit, iaHit) {
-    if((playerHit === "Pierre" && iaHit === "Ciseaux") || (playerHit === "Feuille" && iaHit === "Pierre") ||
-        (playerHit === "Ciseaux" && iaHit === "Feuille")){
+    if((playerHit === "Rock" && iaHit === "Scissors") || (playerHit === "Paper" && iaHit === "Rock") ||
+        (playerHit === "Scissors" && iaHit === "Paper")){
         ++win;
-        res.innerHTML = "Vous avez gagné !";
+        res.innerHTML = "Win !";
         score.innerHTML = "Score : " + win + " win, " + loose + " loose, " + draw + " draw !";
-    }else if((playerHit === "Pierre" && iaHit === "Feuille") || (playerHit === "Feuille" && iaHit === "Ciseaux") ||
-        (playerHit === "Ciseaux" && iaHit === "Pierre")){
+    }else if((playerHit === "Rock" && iaHit === "Paper") || (playerHit === "Paper" && iaHit === "Scissors") ||
+        (playerHit === "Scissors" && iaHit === "Rock")){
         ++loose;
-        res.innerHTML = "Vous avez perdu !";
+        res.innerHTML = "Loose !";
         score.innerHTML = "Score : " + win + " win, " + loose + " loose, " + draw + " draw !";
     }else{
         ++draw;
-        res.innerHTML = "Match nul !";
+        res.innerHTML = "Draw !";
         score.innerHTML = "Score : " + win + " win, " + loose + " loose, " + draw + " draw !";
     }
 }
