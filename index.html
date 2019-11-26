@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
     <h1>Chi-fou-Mi</h1>
     <div id="mode">
         <div id="onePlayer">Un joueur</div>
         <div id="bot">Bot vs Bot</div>
+        <div id="yamcha">Mode yamcha</div>
     </div>
 
     <div id="game">
@@ -19,7 +19,13 @@
         <div class="hit" id="paper">Paper</div>
         <div class="hit" id="scissors">Scissor</div>
 
-        <div id="res"></div>
+        <div>
+            <img src="" alt="avatarP1" id="avatarP1" height="259" width="194">
+            <img src="" alt="avatarP2" id="avatarP2">
+        </div>
+
+        <div id="res"><img src="" alt="" id="yamcha-death"></div>
+
         <img src="#" alt="hitPlayer" id="player">
         <img src="#" alt="hitIA" id="ia">
 
@@ -28,6 +34,7 @@
         <button id="reload">Reset</button>
         <div id="histo"></div>
     </div>
+
     <script src="js/script.js"></script>
 </body>
 </html>

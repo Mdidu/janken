@@ -12,7 +12,7 @@ h1{
     margin: 15px;
     cursor: pointer;
 }
-#onePlayer, #bot{
+#onePlayer, #bot, #yamcha{
     cursor: pointer;
 }
 #mode{
@@ -21,6 +21,20 @@ h1{
 #game{
     display: none;
     margin-top: 3%;
+}
+#avatarP1, #avatarP2{
+    position: absolute;
+}
+#avatarP1{
+    top: 120px;
+    left: 0;
+}
+#avatarP2{
+    top: 120px;
+    right: 0;
+}
+#res{
+    font-size: 40px;
 }
 #ia{
     margin-left: 70px;

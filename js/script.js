@@ -1,18 +1,19 @@
 var mode = document.getElementById("mode");
 var onePlayer = document.getElementById("onePlayer");
 var bot = document.getElementById("bot");
-
+var yamcha = document.getElementById("yamcha");
 var game = document.getElementById('game');
+var avatarP1 = document.getElementById('avatarP1');
+var avatarP2 = document.getElementById('avatarP2');
 var player = document.getElementById('player');
+var yamchaDeath = document.getElementById('yamcha-death');
 var ia = document.getElementById('ia');
 var score = document.getElementById('score');
 var histo = document.getElementById('histo');
 var res = document.getElementById('res');
-
 var rock = document.getElementById('rock');
 var paper = document.getElementById('paper');
 var scissors = document.getElementById('scissors');
-
 var reset = document.getElementById('reload');
 
 //variable storing the image path
@@ -21,21 +22,29 @@ var imgPaper = "img/Rock-paper-scissors_(paper).png";
 var imgScissors = "img/Rock-paper-scissors_(scissors).png";
 
 var round = 0;
-var intervalTempo;
 var roundMax = 100;
-var autoGame;
-var iaHit;
-var iaHit2;
 var win = 0;
 var loose = 0;
 var draw = 0;
+var intervalTempo;
+var autoGame;
+var iaHit;
+var iaHit2;
+
+var bool = false;
 
 var hits = ["Rock", "Paper", "Scissors"];
 
 function modeChoice() {
     mode.style.display = "none";
     game.style.display = "block";
+    avatarP1.src = "img/goku-namek.png";
+    avatarP2.src = "img/freezer.png";
+
     if(this === bot){
+        avatarP1.src = "img/vegeta-blue.png";
+        avatarP2.src = "img/golden-freezer.png";
+
         rock.style.display = "none";
         paper.style.display = "none";
         scissors.style.display = "none";
@@ -51,6 +60,10 @@ function modeChoice() {
                 }
             }, 1000);
         }
+    }else if(this === yamcha){
+        avatarP1.src = "img/yamcha.png";
+        avatarP2.src = "img/saibaman.png";
+        bool = true;
     }
 }
 
@@ -61,19 +74,42 @@ function hitRandom(id) {
 //function that triggers the game
 function party(){
     iaHit = hitRandom(hits);
-    if(this === rock){
-        imgHit("Rock", iaHit);
-        compar("Rock", iaHit);
-    }else if(this === paper){
-        imgHit("Paper", iaHit);
-        compar("Paper", iaHit);
-    }else if(this === scissors){
-        imgHit("Scissors", iaHit);
-        compar("Scissors", iaHit);
+    if(this === rock && bool === true){
+        rock.style.display = "none";
+        paper.style.display = "none";
+        scissors.style.display = "none";
+
+        imgHit("Rock", "Paper");
+        compar("Rock", "Paper");
+    }else if(this === paper && bool === true){
+        rock.style.display = "none";
+        paper.style.display = "none";
+        scissors.style.display = "none";
+
+        imgHit("Paper", "Scissors");
+        compar("Paper", "Scissors");
+    }else if(this === scissors && bool === true){
+        rock.style.display = "none";
+        paper.style.display = "none";
+        scissors.style.display = "none";
+
+        imgHit("Scissors", "Rock");
+        compar("Scissors", "Rock");
     }else {
-        iaHit2 = hitRandom(hits);
-        imgHit(iaHit, iaHit2);
-        compar(iaHit, iaHit2);
+        if(this === rock){
+            imgHit("Rock", iaHit);
+            compar("Rock", iaHit);
+        }else if(this === paper){
+            imgHit("Paper", iaHit);
+            compar("Paper", iaHit);
+        }else if(this === scissors){
+            imgHit("Scissors", iaHit);
+            compar("Scissors", iaHit);
+        }else {
+            iaHit2 = hitRandom(hits);
+            imgHit(iaHit, iaHit2);
+            compar(iaHit, iaHit2);
+        }
     }
 }
 //function used to display the image of the move played by the player
@@ -100,20 +136,30 @@ function compar(playerHit, iaHit) {
     if((playerHit === "Rock" && iaHit === "Scissors") || (playerHit === "Paper" && iaHit === "Rock") ||
         (playerHit === "Scissors" && iaHit === "Paper")){
         ++win;
-        res.innerHTML = "Win !";
-        score.innerHTML = "Score : " + win + " win, " + loose + " loose, " + draw + " draw !";
+        res.className = "green";
+        spawnResult("Win !");
         historyHits(playerHit, iaHit, "green");
     }else if((playerHit === "Rock" && iaHit === "Paper") || (playerHit === "Paper" && iaHit === "Scissors") ||
         (playerHit === "Scissors" && iaHit === "Rock")){
         ++loose;
-        res.innerHTML = "Loose !";
-        score.innerHTML = "Score : " + win + " win, " + loose + " loose, " + draw + " draw !";
+        res.className = "red";
+        spawnResult("Loose !");
         historyHits(playerHit, iaHit, "red");
     }else{
         ++draw;
-        res.innerHTML = "Draw !";
-        score.innerHTML = "Score : " + win + " win, " + loose + " loose, " + draw + " draw !";
+        res.className = "";
+        spawnResult("Draw !");
         historyHits(playerHit, iaHit);
+    }
+}
+
+//function displaying the result
+function spawnResult(value) {
+    if(bool === true){
+        yamchaDeath.src = "img/mort-yamcha.png";
+    }else{
+        res.innerHTML = value;
+        score.innerHTML = "Score : " + win + " win, " + loose + " loose, " + draw + " draw !";
     }
 }
 
@@ -142,15 +188,18 @@ function reload(){
     score.innerHTML = "";
     player.src = "";
     ia.src = "";
+
     win = 0;
     loose = 0;
     draw = 0;
     round = 0;
+
     mode.style.display = "block";
     game.style.display = "none";
     rock.style.display = "block";
     paper.style.display = "block";
     scissors.style.display = "block";
+
     clearInterval(autoGame);
     while (histo.firstChild){
         histo.removeChild(histo.firstChild);
@@ -159,6 +208,7 @@ function reload(){
 
 onePlayer.addEventListener('click', modeChoice);
 bot.addEventListener('click', modeChoice);
+yamcha.addEventListener('click', modeChoice);
 rock.addEventListener('click', party);
 paper.addEventListener('click', party);
 scissors.addEventListener('click', party);
