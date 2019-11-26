@@ -6,6 +6,7 @@ var game = document.getElementById('game');
 var player = document.getElementById('player');
 var ia = document.getElementById('ia');
 var score = document.getElementById('score');
+var histo = document.getElementById('histo');
 var res = document.getElementById('res');
 
 var rock = document.getElementById('rock');
@@ -127,7 +128,7 @@ function historyHits(playerHit, iaHit, color) {
     p2.innerHTML += " Player 2: " + iaHit;
     history.appendChild(p2);
 
-    game.appendChild(history);
+    histo.appendChild(history);
 
     if(color === "green"){
         p1.className = "green";
@@ -151,6 +152,9 @@ function reload(){
     paper.style.display = "block";
     scissors.style.display = "block";
     clearInterval(autoGame);
+    while (histo.firstChild){
+        histo.removeChild(histo.firstChild);
+    }
 }
 
 onePlayer.addEventListener('click', modeChoice);
