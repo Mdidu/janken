@@ -48,3 +48,9 @@ h1{
 .green{
     color: green;
 }
+#yamchaDeath{
+    display: none;
+    position: relative;
+    /*top: 60px;*/
+    left: 380px;
+}

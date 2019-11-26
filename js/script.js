@@ -6,7 +6,7 @@ var game = document.getElementById('game');
 var avatarP1 = document.getElementById('avatarP1');
 var avatarP2 = document.getElementById('avatarP2');
 var player = document.getElementById('player');
-var yamchaDeath = document.getElementById('yamcha-death');
+var yamchaDeath = document.getElementById('yamchaDeath');
 var ia = document.getElementById('ia');
 var score = document.getElementById('score');
 var histo = document.getElementById('histo');
@@ -26,7 +26,6 @@ var roundMax = 100;
 var win = 0;
 var loose = 0;
 var draw = 0;
-var intervalTempo;
 var autoGame;
 var iaHit;
 var iaHit2;
@@ -50,16 +49,8 @@ function modeChoice() {
         scissors.style.display = "none";
         res.style.display ="none";
 
-        if(round < roundMax){
-            autoGame = setInterval(party,300);
-            intervalTempo = setInterval(function () {
-                ++round;
-                if (round >= roundMax){
-                    clearInterval(autoGame);
-                    clearInterval(intervalTempo);
-                }
-            }, 1000);
-        }
+        autoGame = setInterval(party,300);
+
     }else if(this === yamcha){
         avatarP1.src = "img/yamcha.png";
         avatarP2.src = "img/saibaman.png";
@@ -74,6 +65,11 @@ function hitRandom(id) {
 //function that triggers the game
 function party(){
     iaHit = hitRandom(hits);
+    ++round;
+    if(round >= roundMax){
+        clearInterval(autoGame);
+    }
+
     if(this === rock && bool === true){
         rock.style.display = "none";
         paper.style.display = "none";
@@ -156,7 +152,9 @@ function compar(playerHit, iaHit) {
 //function displaying the result
 function spawnResult(value) {
     if(bool === true){
-        yamchaDeath.src = "img/mort-yamcha.png";
+        yamchaDeath.style.display = "block";
+        score.innerHTML = "Score : " + win + " win, " + loose + " loose, " + draw + " draw !";
+        bool = false;
     }else{
         res.innerHTML = value;
         score.innerHTML = "Score : " + win + " win, " + loose + " loose, " + draw + " draw !";
@@ -184,10 +182,13 @@ function historyHits(playerHit, iaHit, color) {
         p2.className = "green";
     }
 }
+
 function reload(){
     score.innerHTML = "";
     player.src = "";
     ia.src = "";
+    res.innerHTML = "";
+    yamchaDeath.style.display = "none";
 
     win = 0;
     loose = 0;
@@ -200,7 +201,9 @@ function reload(){
     paper.style.display = "block";
     scissors.style.display = "block";
 
+    //If you click on reset before the end
     clearInterval(autoGame);
+
     while (histo.firstChild){
         histo.removeChild(histo.firstChild);
     }
