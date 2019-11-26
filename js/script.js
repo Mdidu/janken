@@ -42,7 +42,7 @@ function modeChoice() {
         res.style.display ="none";
 
         if(round < roundMax){
-            autoGame = setInterval(party,1000);
+            autoGame = setInterval(party,300);
             intervalTempo = setInterval(function () {
                 ++round;
                 if (round >= roundMax){
