@@ -49,7 +49,7 @@ function modeChoice() {
         scissors.style.display = "none";
         res.style.display ="none";
 
-        autoGame = setInterval(party,300);
+        autoGame = setInterval(party,600);
 
     }else if(this === yamcha){
         avatarP1.src = "img/yamcha.png";
